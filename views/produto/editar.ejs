@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') -%>
+
+<div>Edit Page</div>
+
+<form action="/produtos/<%=produto.id%>?_method=PUT" method="POST" style="margin-top: 100px;">
+    <div>
+        <label for="">Nome: </label>
+        <input type="text" value="<%= produto.nome %>" name="produto[nome]">
+    </div>
+    <div>
+        <label for="">Preço: </label>
+        <input type="text" value="<%= produto.preco %>" name="produto[preco]">
+    </div>
+    <div>
+        <label for="">Url da Imagem: </label>
+        <input type="text" value="<%= produto.image %>" name="produto[image]">
+    </div>
+    <div>
+        <label for="">Descrição: </label>
+        <textarea name="produto[descricao]" id="" cols="30" rows="10"><%= produto.descricao %></textarea>
+    </div>
+    <button>Adicionar</button>
+</form>

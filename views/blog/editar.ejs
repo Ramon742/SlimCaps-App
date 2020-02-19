@@ -1,0 +1,7 @@
+<% layout('layouts/boilerplate') -%>
+<form action="/blog/<%= blog.id%>?_method=PUT" method="POST" style="margin-top: 150px;">
+    <input type="text" value="<%= blog.titulo %>" name="titulo" placeholder="título">
+    <input type="text" value="<%= blog.body %>" name="body" placeholder="texto">
+    <input type="text" value="<%= blog.image %>" name="image" placeholder="url da imagem">
+    <button>Editar Postagem</button>
+</form>

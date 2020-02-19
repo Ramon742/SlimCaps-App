@@ -1,0 +1,103 @@
+<% layout('layouts/boilerplate') -%>
+
+
+<div style="max-width: 540px; margin: 10% auto;">
+    <div class="row no-gutters">
+      <div>
+        <img style="width: 500px;" src="<%= produto.image %>" alt="">
+        <div class="mt-5" style="color: #faf014; font-size: 25px;">
+          <% for(let i = 0; i < 5; i++) { %>
+              <% if(i < floorRating) { %>
+              <!-- display a full star -->
+              <i class="fas fa-star"></i>
+              <% } else if((produto.avgRating - i) > 0 && (produto.avgRating - i) < 1) { %>
+              <!-- display a half star -->
+              <i class="fas fa-star-half-alt"></i>
+              <% } else { %>
+              <!-- display an empty star -->
+              <i class="far fa-star"></i>
+              <% } %>
+          <% } %>
+          <%= `${produto.avgRating} estrela${produto.avgRating === 1 ? '' : 's'}` %>
+          </div>
+      </div>
+      <div>
+        <div class="card-body">
+          <h5 class="card-title"><a href="/produtos/<%= produto.id%>"><%= produto.nome %></a></h5>
+          <p class="card-text"><%= produto.descricao %></p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          <p><strong><%= produto.preco %>$</strong></p>
+          <button class="btn btn-success">Adicionar no Carrinho</button>
+          <a class="btn btn-warning" href="/produtos/<%= produto.id %>/editar">Editar</a>
+          <form style="display: inline;" action="/produtos/<%= produto.id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Deletar</button>
+          </form>
+        </div>
+      </div>
+      </div>
+      <div>
+        <h1 class="my-3" style="color: #17a2b8;">Comentários</h1>
+
+        <% produto.reviews.forEach(function(review) { %>
+          <div>
+            <strong><%= review.author.username %> -</strong>
+            <%= review.body %><br>
+            Avaliação: <%= review.rating %>
+          </div>
+          <% if(currentUser && review.author.equals(currentUser._id)) { %>
+            <div>
+              <form style="display: inline;" action="/produtos/<%= produto.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
+                <input class="btn btn-outline-danger" type="submit" value="Deletar">
+              </form>
+              <button class="toggle-edit-form btn btn-outline-warning">Editar</button>
+              <form action="/produtos/<%= produto.id %>/reviews/<%= review.id %>?_method=PUT" method="POST" class="edit-review-form">
+                <textarea class="form-control" name="review[body]" required><%= review.body %></textarea>
+                <fieldset class="starability-basic">
+                  <legend>Avaliação:</legend>
+                  <input type="radio" id="edit-rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+                  <input type="radio" id="edit-rate1" name="review[rating]" value="1" />
+                  <label for="edit-rate1" title="Terrible">1 star</label>
+                  <input type="radio" id="edit-rate2" name="review[rating]" value="2" />
+                  <label for="edit-rate2" title="Not good">2 stars</label>
+                  <input type="radio" id="edit-rate3" name="review[rating]" value="3" />
+                  <label for="edit-rate3" title="Average">3 stars</label>
+                  <input type="radio" id="edit-rate4" name="review[rating]" value="4" />
+                  <label for="edit-rate4" title="Very good">4 stars</label>
+                  <input type="radio" id="edit-rate5" name="review[rating]" value="5" />
+                  <label for="edit-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+                <input class="btn btn-outline-success" type="submit" value="Concluir">
+              </form>
+              
+              <script>
+                $('#edit-rate<%= review.rating %>').prop('checked', true);
+              </script>
+            </div>
+            <% } %>
+          <hr>
+        <% }); %>
+      </div>
+      <% if(currentUser) { %>
+        <h4 style="color: #17a2b8; border-bottom: 1px solid rgba(23, 162, 184, .6); width: 200px;">Criar Comentário</h4>
+        <form action="/produtos/<%= produto.id %>/reviews" method="POST">
+          <textarea class="form-control" name="review[body]" rows="5" required></textarea>
+          <fieldset class="starability-basic">
+            <legend>Avaliação:</legend>
+            <input type="radio" id="rate0" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+              <input type="radio" id="rate1" name="review[rating]" value="1" />
+              <label for="rate1" title="Terrible">1 star</label>
+              <input type="radio" id="rate2" name="review[rating]" value="2" />
+              <label for="rate2" title="Not good">2 stars</label>
+              <input type="radio" id="rate3" name="review[rating]" value="3" />
+              <label for="rate3" title="Average">3 stars</label>
+              <input type="radio" id="rate4" name="review[rating]" value="4" />
+              <label for="rate4" title="Very good">4 stars</label>
+              <input type="radio" id="rate5" name="review[rating]" value="5" />
+              <label for="rate5" title="Amazing">5 stars</label>
+          </fieldset>
+          <input class="btn btn-primary mt-3" type="submit" value="Comentar">
+        </form>
+        <% } else { %>
+        <h2><a href="/login?returnTo=true">Adicionar Comentário</a></h2>
+        <% } %>
+      </div>

@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate') -%>
+
+
+<!-- Jumbotron -->
+<div class="card card-image mb-5" style="background-image: url(https://www.orthology.com/wp-content/uploads/2016/10/shutterstock_221702965.jpg); background-size: cover; margin-top: 55px;">
+    <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+      <div class="py-5">
+  
+        <!-- Content -->
+        <h5 class="h5 orange-text"><i class="fas fa-camera-retro"></i> Slimcaps</h5>
+        <h2 class="card-title h2 my-4 py-2">Blog</h2>
+        <p class="mb-4 pb-2 px-md-5 mx-md-5">Aqui você ficará por dentro de tudo sobre a Slimcaps, notícias, promoções, produtos e muito mais!</p>
+        <a class="btn peach-gradient"><i class="fas fa-clone left"></i> View project</a>
+  
+      </div>
+    </div>
+  </div>
+  <!-- Jumbotron -->
+
+
+<div class="container">
+        <% blog.forEach(function(blog){ %>
+            <!-- News jumbotron -->
+<div class="jumbotron text-center hoverable p-4">
+
+    <!-- Grid row -->
+    <div class="row">
+  
+      <!-- Grid column -->
+      <div class="col-md-4 offset-md-1 mx-3 my-3">
+  
+        <!-- Featured image -->
+        <div class="view overlay">
+          <img src="<%= blog.image%>" class="img-fluid" alt="Sample image for first version of blog listing">
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+  
+      </div>
+      <!-- Grid column -->
+  
+      <!-- Grid column -->
+      <div class="col-md-7 text-md-left ml-3 mt-3">
+  
+        <!-- Excerpt -->
+        <a href="#!" class="green-text">
+          <h6 class="h6 pb-1"><i class="fas fa-desktop pr-1"></i> Work</h6>
+        </a>
+  
+        <h4 class="h4 mb-4"><%= blog.titulo %></h4>
+  
+        <p class="font-weight-normal"><%= blog.body %></p>
+        <p class="font-weight-normal">por <a><strong>SlimCaps</strong></a>, 19/08/2016</p>
+  
+        <a  href="/blog/<%= blog.id %>" class="btn btn-success">Ler mais</a>
+  
+      </div>
+      <!-- Grid column -->
+  
+    </div>
+    <!-- Grid row -->
+  
+  </div>
+  <!-- News jumbotron -->
+            
+        <% }) %>
+        
+
+</div>
